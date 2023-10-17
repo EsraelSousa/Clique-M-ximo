@@ -289,9 +289,7 @@ void showGrafoRepresentacaoVetorial(vector<vector<edge>> &listaAdjacencia){
     }
 }
 
-// algoritmos clique máximo
-
-// força bruta
+// algoritmos de força bruta para clique máximo
 
 bool ehClique(vector<int> &vertices, vector<vector<int>> &matrizAdjacencia){
     int n = (int)vertices.size();
@@ -338,7 +336,6 @@ vector<int> pegaCliqueMaximoForcaBruta(vector<vector<int>> &matrizAdjacencia){
     }
     return cliqueMaximo;
 }
-
 
 int main(int argc, char* argv[]){
     ios_base::sync_with_stdio(0); cin.tie(nullptr); // faz uma otimização de leitura
