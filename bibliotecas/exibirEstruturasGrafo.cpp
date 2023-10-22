@@ -1,10 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include "arestaGrafo.h"
-#include "checarRecursos.cpp"
-#include "conversaoEstruturas.cpp"
 
-using namespace std;
+using namespace std; 
 
 int countDigitos(int n){
     int ans = 1;

@@ -7,11 +7,12 @@
 #include <iomanip>
 #include <set>
 #include <map>
-#include "arestaGrafo.h"
-#include "checarRecursos.cpp"
-#include "conversaoEstruturas.cpp"
-#include "exibirEstruturasGrafo.cpp"
-
+#include "./bibliotecas/arestaGrafo.h"
+#include "./bibliotecas/checarRecursos.cpp"
+#include "./bibliotecas/cliqueMaximo.cpp"
+#include "./bibliotecas/conversaoEstruturas.cpp"
+#include "./bibliotecas/exibirCliqueMaximo.cpp"
+#include "./bibliotecas/exibirEstruturasGrafo.cpp"
 
 using namespace std;
 

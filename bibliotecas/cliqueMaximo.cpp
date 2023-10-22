@@ -8,10 +8,13 @@ número de vértices for muito grande, os subconjuntos serão gerados recursivam
 Você pode altera-lo para 0 para gerar os subconjuntos de forma recursiva, mas seu 
 valor máximo não deve passar de 60, pois estamos usando um inteiro de 64 bits para
 representar os subconjuntos, e um valor maior que 60 pode gerar overflow podendo
-causar imprecisão ou até mesmo loop infinito no algoritmo */
-const int MAXN_OPBIT = 6;
+causar imprecisão ou até mesmo loop infinito no algoritmo.
+Recomenda-se usar a geração de subconjuntos usando inteiros sempre que o grafo possui 
+não mais que 60 vértices, pois é mais eficiente e usa menos memória do que gerar os
+subconjuntos recursivamente. */
+const int MAXN_OPBIT = 60;
 
-// algoritmos de força bruta para clique máximo
+// algoritmo de força bruta para clique máximo
 
 bool ehClique(vector<int> &vertices, vector<vector<int>> &matrizAdjacencia){
     int n = (int)vertices.size();
@@ -53,8 +56,10 @@ vector<int> pegaCliqueMaximoForcaBruta(vector<vector<int>> &matrizAdjacencia){
         }
     }
     else{
-        geraSubconjuntosRecursio(conjunto, n, 1,
-                                                cliqueMaximo, matrizAdjacencia);
+        geraSubconjuntosRecursio(conjunto, n, 1, cliqueMaximo, matrizAdjacencia);
     }
     return cliqueMaximo;
 }
+
+// algoritmo otimizado para encontrar o clique maximo
+

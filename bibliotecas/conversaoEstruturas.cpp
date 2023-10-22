@@ -2,7 +2,7 @@
 #include <map>
 #include <set>
 #include "arestaGrafo.h"
-#include "checarRecursos.cpp"
+#include "checarRecursos.h"
 
 using namespace std;
 
