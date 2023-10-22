@@ -22,6 +22,7 @@ bool isUmaEstruturaValida(string &s){
     if(s == "-mi") return 1;
     if(s == "-mp") return 1;
     if(s == "-rv") return 1;
+    if(s == "-cm") return 1;
     return 0;
 }
 
@@ -33,6 +34,7 @@ void showComandosEstruturas(){
     cout << "\033[1;34m  -la    -> lista de adjacencias\n\033[0m";
     cout << "\033[1;34m  -rv    -> representacao vetorial\n\033[0m";
     cout << "\033[1;34m  -mp    -> matriz de pesos\n\033[0m";
+    cout << "\033[1;34m  -cm    -> clique maximo\n\033[0m";
 }
 
 vector<vector<edge>> readGrafo(string &nomeArquivo, bool isDirecionado){
@@ -98,7 +100,7 @@ int main(int argc, char* argv[]){
         showComandosEstruturas();
         return 1;
     }
-    if(strcmp(argv[5], "0") != 0 && strcmp(argv[5], "1") != 0){
+    if(strcmp(argv[4], "-cm") && strcmp(argv[5], "0") != 0 && strcmp(argv[5], "1") != 0){
         cerr << "\033[1;31m O comando:\033[0m " << argv[5] <<
         "\033[1;31m nao eh valido\n\033[0m"; return 1;
     }
@@ -125,6 +127,9 @@ int main(int argc, char* argv[]){
     else if(tipoEstrutura == "-mp"){
         vector<vector<double>> matrizPesos = listaAdjacencia2matrizPesos(listaAdjacencia);
         showGrafoMatrizPesos(matrizPesos);
+    }
+    else if(tipoEstrutura == "-cm"){
+        showCliqueMaximo(listaAdjacencia);
     }
     return 0;
 }

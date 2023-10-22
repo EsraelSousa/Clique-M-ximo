@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -20,7 +21,7 @@ bool ehClique(vector<int> &vertices, vector<vector<int>> &matrizAdjacencia){
     int n = (int)vertices.size();
     for(int i=0; i<n; i++)
         for(int j=0; j<n; j++)
-            if(i != j && matrizAdjacencia[i][j] == 0)
+            if(i != j && matrizAdjacencia[ vertices[i] ][ vertices[j] ] == 0)
                 return false;
     return true;
 }
@@ -43,7 +44,7 @@ vector<int> pegaCliqueMaximoForcaBruta(vector<vector<int>> &matrizAdjacencia){
     vector<int> cliqueMaximo, conjunto;
     int n = matrizAdjacencia.size();
     if(matrizAdjacencia.size() <= MAXN_OPBIT){
-        for(long long i = (1LL << (n+1)); i>0; i--){
+        for(long long i = (1LL << (n)); i>0; i--){
             // pega o subconjunto
             for(int j = 1; j<=MAXN_OPBIT; j++)
                 if(i & (1LL << j))
