@@ -7,13 +7,20 @@
 
 using namespace std;
 
-void showCliqueMaximo(vector<vector<edge>> &listaAdjacencia){
+void showCliquesMaximo(vector<vector<edge>> &listaAdjacencia){
     vector<vector<int>> matrizAdjacencia = listaAdjacencia2matrizAdjacencia(listaAdjacencia);
-    vector<int> cliqueMaximo = pegaCliqueMaximoForcaBruta(matrizAdjacencia);
-    cout << "O Clique Maximo contem " << cliqueMaximo.size() << " vertices:\n";
-    for(auto v: cliqueMaximo)
-        cout << v << ' ';
-    cout << '\n';
+    set<set<int>> cliquesMaximo = pegaCliquesMaximoForcaBruta(matrizAdjacencia);
+    cout << "O grafo contem " << cliquesMaximo.size() << " clique(s) maximo(s)\n";
+    if(cliquesMaximo.empty()) // o grafo não tem cliques 
+        return ;
+    cout << "O Clique Maximo contem " << cliquesMaximo.begin()->size() << " vertices:\n";
+    int i=1;
+    for(auto &clique: cliquesMaximo){
+        cout << "Clique " << i++ << ": "; 
+        for(auto v: clique)
+            cout << v << ' ';
+        cout << '\n';
+    }
 }
 
 void showTodosCliqueMaximo(){

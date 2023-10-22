@@ -129,7 +129,7 @@ int main(int argc, char* argv[]){
         showGrafoMatrizPesos(matrizPesos);
     }
     else if(tipoEstrutura == "-cm"){
-        showCliqueMaximo(listaAdjacencia);
+        showCliquesMaximo(listaAdjacencia);
     }
     return 0;
 }

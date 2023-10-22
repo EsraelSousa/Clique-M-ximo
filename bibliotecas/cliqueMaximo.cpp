@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -26,22 +27,42 @@ bool ehClique(vector<int> &vertices, vector<vector<int>> &matrizAdjacencia){
     return true;
 }
 
-void geraSubconjuntosRecursio(vector<int> &conjunto, int n, int k, vector<int> &cliqueMaximo,
+void adicionaClique(vector<int> &conjunto, set<set<int>> &cliquesMaximo){
+    auto it = cliquesMaximo.begin();
+    if(conjunto.size() < it->size()) return ;
+    set<int> aux;
+    aux.insert(conjunto.begin(), conjunto.end());
+    if(conjunto.size() > cliquesMaximo.begin()->size()){ // temos um clique maior
+        // vamos limpar a memoria
+        for(auto it: cliquesMaximo)
+            it.clear();
+        cliquesMaximo.clear();
+        cliquesMaximo.insert(aux);
+    }
+    else if(conjunto.size() == cliquesMaximo.begin()->size())
+        cliquesMaximo.insert(aux);
+}
+
+void geraSubconjuntosRecursio(vector<int> &conjunto, int n, int k, set<set<int>> &cliquesMaximo,
                               vector<vector<int>> &matrizAdjacencia){
     if(k > n)
         return ;
     // processa subconjunto
-    if(conjunto.size() > cliqueMaximo.size() && ehClique(conjunto, matrizAdjacencia))
-        cliqueMaximo = conjunto;
+    if(ehClique(conjunto, matrizAdjacencia))
+        adicionaClique(conjunto, cliquesMaximo);
     // gera os subconjuntos
-    geraSubconjuntosRecursio(conjunto, n, k+1, cliqueMaximo, matrizAdjacencia);
+    geraSubconjuntosRecursio(conjunto, n, k+1, cliquesMaximo, matrizAdjacencia);
     conjunto.push_back(k);
-    geraSubconjuntosRecursio(conjunto, n, k+1, cliqueMaximo, matrizAdjacencia);
+    geraSubconjuntosRecursio(conjunto, n, k+1, cliquesMaximo, matrizAdjacencia);
     conjunto.pop_back();
 }
 
-vector<int> pegaCliqueMaximoForcaBruta(vector<vector<int>> &matrizAdjacencia){
-    vector<int> cliqueMaximo, conjunto;
+set<set<int>> pegaCliquesMaximoForcaBruta(vector<vector<int>> &matrizAdjacencia){
+    vector<int> conjunto;
+    set<int> aux;
+    set<set<int>> cliquesMaximo;
+    aux.insert(1);
+    cliquesMaximo.insert(aux);
     int n = matrizAdjacencia.size();
     if(matrizAdjacencia.size() <= MAXN_OPBIT){
         for(long long i = (1LL << (n)); i>0; i--){
@@ -50,17 +71,24 @@ vector<int> pegaCliqueMaximoForcaBruta(vector<vector<int>> &matrizAdjacencia){
                 if(i & (1LL << j))
                     conjunto.push_back(j);
             // verifica se é um clique
-            if(conjunto.size() > cliqueMaximo.size() && ehClique(conjunto, matrizAdjacencia))
-                cliqueMaximo = conjunto;
+            if(ehClique(conjunto, matrizAdjacencia))
+                adicionaClique(conjunto, cliquesMaximo);
             // limpa conjunto para a próxima iteração
             conjunto.clear();
+            aux.clear();
         }
     }
     else{
-        geraSubconjuntosRecursio(conjunto, n, 1, cliqueMaximo, matrizAdjacencia);
+        geraSubconjuntosRecursio(conjunto, n, 1, cliquesMaximo, matrizAdjacencia);
     }
-    return cliqueMaximo;
+    // verifica se encontrou um clique maximo 
+    if(cliquesMaximo.begin()->size() == 1){ // não achou um clique, pois um clique deve ter pelo menos 2 vertices
+        for(auto it: cliquesMaximo)
+            it.clear();
+        cliquesMaximo.clear();
+    }
+    return cliquesMaximo;
 }
 
-// algoritmo otimizado para encontrar o clique maximo
+// algoritmo otimizado para encontrar o clique maximais
 
